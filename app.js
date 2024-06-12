@@ -172,7 +172,7 @@ function drawVictims() {
 
   let animalEmojis = ''
 
-  notAliveAnimals.forEach((animal) => animalEmojis += `<span  title="RIP ${animal.name}">${animal.emoji}</span>`)
+  notAliveAnimals.forEach((animal) => animalEmojis += `<span title="RIP ${animal.name}">${animal.emoji}</span>`)
 
   const animalGraveyardElement = document.getElementById('animalGraveyard')
   animalGraveyardElement.innerHTML = animalEmojis
@@ -194,16 +194,17 @@ function commitMurder() {
   const potentialVictims = animals.filter((animal) => animal.isAlive == true && animal.isMurderer == false)
 
   console.log('potential victims', potentialVictims);
-  const randomIndex = Math.floor(Math.random() * potentialVictims.length)
   // ✅ pick a victim at random
+  const randomIndex = Math.floor(Math.random() * potentialVictims.length)
   const randomVictim = potentialVictims[randomIndex]
+
   // ✅ change isAlive to false
   randomVictim.isAlive = false
   console.log('THE VICTIM', randomVictim);
   drawAnimals()
   drawClue()
 
-  // if there are no victims left
+  // if we murdered the last victim
   if (potentialVictims.length == 1) {
     const murderer = getTheMurderer()
     window.alert(`${murderer.name} was the murderer all along! You failed dumb dumb detective`)
@@ -215,9 +216,11 @@ function accuseAnimal() {
   // ✅ allow user to type in name of animal
   const nameOfAnimal = window.prompt("Who did it?")
   console.log('Accused animal name', nameOfAnimal);
+
   // ✅ get the murderer
   const murderer = getTheMurderer()
   console.log('MURDERER', murderer);
+
   // ✅ compare the murderer's name to the user input
   if (nameOfAnimal == murderer.name) {
     window.alert(`${murderer.name} is going to jail forever. Great job detective!`)
@@ -253,10 +256,11 @@ function drawClue() {
   switch (nextClue) {
     // case checks if the key is 'food'
     case 'food':
+      // if the key was food, run all code below
       const randomFoodIndex = Math.floor(Math.random() * murderer.likesToEat.length)
       const randomFood = murderer.likesToEat[randomFoodIndex]
       clueText = `<li>The murderer has a taste for ${randomFood}</li>`
-      // break will end swicth statement
+      // break will end switch statement
       break;
 
     case 'weapon':
@@ -295,22 +299,26 @@ function getTheMurderer() {
 
 function endGame() {
 
+  // resets all animals
   animals.forEach((animal) => {
     animal.isAlive = true
     animal.isMurderer = false
   })
-  document.getElementById('clues').innerText = ''
+
+  // sets innerHtml to nothing
+  document.getElementById('clues').innerHTML = ''
+
   // Empties array
   clues.length = 0
+
   // Adds all of these strings back into our clues array
   clues.push('food', 'weapon', 'isMammal', 'emoji')
   startGame()
 }
 
 function startGame() {
-  drawAnimals()
   makeAMurderer()
-  commitMurder()
+  commitMurder() // commitMurder draws animals and clue for us
 }
 
 // ANCHOR run these function on page load
