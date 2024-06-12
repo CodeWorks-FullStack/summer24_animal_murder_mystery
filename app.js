@@ -130,17 +130,42 @@ const animals = [
   },
 ]
 
+// function drawAnimals() {
+//   let animalEmojis = ''
+//   for (let i = 0; i < animals.length; i++) {
+//     const animal = animals[i];
+//     animalEmojis += animal.emoji
+//   }
+//   const animalLineupElement = document.getElementById('animalLineup')
+//   animalLineupElement.innerText = animalEmojis
+// }
+
 function drawAnimals() {
+  drawSuspects()
+  drawVictims()
+}
+
+function drawSuspects() {
+  const aliveAnimals = animals.filter((animal) => animal.isAlive == true)
+
   let animalEmojis = ''
-  for (let i = 0; i < animals.length; i++) {
-    const animal = animals[i];
-    animalEmojis += animal.emoji
-  }
+
+  aliveAnimals.forEach((animal) => animalEmojis += animal.emoji)
+
   const animalLineupElement = document.getElementById('animalLineup')
   animalLineupElement.innerText = animalEmojis
 }
 
+function drawVictims() {
+  const notAliveAnimals = animals.filter((animal) => animal.isAlive == false)
 
+  let animalEmojis = ''
+
+  notAliveAnimals.forEach((animal) => animalEmojis += animal.emoji)
+
+  const animalGraveyardElement = document.getElementById('animalGraveyard')
+  animalGraveyardElement.innerText = animalEmojis
+}
 
 function makeAMurderer() {
   // ✅ select an animal at random
@@ -164,10 +189,12 @@ function commitMurder() {
   // ✅ change isAlive to false
   randomVictim.isAlive = false
   console.log('THE VICTIM', randomVictim);
+  drawAnimals()
 }
 
 // ANCHOR run these function on page load
 drawAnimals()
 makeAMurderer()
+commitMurder()
 
 // !SECTION
