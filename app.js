@@ -193,11 +193,6 @@ function commitMurder() {
   // ✅ make sure animal is alive
   const potentialVictims = animals.filter((animal) => animal.isAlive == true && animal.isMurderer == false)
 
-  // if there are no victims left
-  if (potentialVictims.length == 0) {
-    endGame()
-  }
-
   console.log('potential victims', potentialVictims);
   const randomIndex = Math.floor(Math.random() * potentialVictims.length)
   // ✅ pick a victim at random
@@ -207,6 +202,11 @@ function commitMurder() {
   console.log('THE VICTIM', randomVictim);
   drawAnimals()
   drawClue()
+
+  // if there are no victims left
+  if (potentialVictims.length == 1) {
+    endGame()
+  }
 }
 
 function accuseAnimal() {
@@ -214,7 +214,7 @@ function accuseAnimal() {
   const nameOfAnimal = window.prompt("Who did it?")
   console.log('Accused animal name', nameOfAnimal);
   // ✅ get the murderer
-  const murderer = animals.find((animal) => animal.isMurderer == true)
+  const murderer = getTheMurderer()
   console.log('MURDERER', murderer);
   // ✅ compare the murderer's name to the user input
   if (nameOfAnimal == murderer.name) {
@@ -228,7 +228,7 @@ function accuseAnimal() {
 
 function drawClue() {
   // get ✅ the murderer
-  const murderer = animals.find((animal) => animal.isMurderer == true)
+  const murderer = getTheMurderer()
 
   // NOTE shift removes the first element from an array and returns it
   const nextClue = clues.shift()
@@ -284,13 +284,31 @@ function drawClue() {
   cluesElement.innerHTML += clueText
 }
 
+function getTheMurderer() {
+  const murderer = animals.find((animal) => animal.isMurderer == true)
+  return murderer
+}
+
 function endGame() {
-  window.alert()
+  const murderer = getTheMurderer()
+  window.alert(`${murderer.name} was the murderer all along! You failed dumb dumb detective`)
+  animals.forEach((animal) => {
+    animal.isAlive = true
+    animal.isMurderer = false
+  })
+  startGame()
+}
+
+function startGame() {
+  drawAnimals()
+  makeAMurderer()
+  commitMurder()
 }
 
 // ANCHOR run these function on page load
-drawAnimals()
-makeAMurderer()
-commitMurder()
+// drawAnimals()
+// makeAMurderer()
+// commitMurder()
+startGame()
 
 // !SECTION
