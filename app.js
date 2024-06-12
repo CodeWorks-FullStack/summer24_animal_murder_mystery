@@ -75,6 +75,15 @@ const animals = [
     isAlive: true
   },
   {
+    name: 'Mick',
+    emoji: '🦧',
+    weapon: 'Crocs',
+    isMammal: true,
+    likesToEat: ['nachos', 'salads', 'cheetos'],
+    isMurderer: false,
+    isAlive: true
+  },
+  {
     name: 'Apollo',
     emoji: '🦒',
     weapon: 'Feet',
@@ -127,8 +136,10 @@ const animals = [
     likesToEat: ['vegetables'],
     isMurderer: false,
     isAlive: true
-  },
+  }
 ]
+
+const clues = ['food', 'weapon', 'isMammal', 'emoji']
 
 // function drawAnimals() {
 //   let animalEmojis = ''
@@ -190,23 +201,82 @@ function commitMurder() {
   randomVictim.isAlive = false
   console.log('THE VICTIM', randomVictim);
   drawAnimals()
+  drawClue()
 }
 
 function accuseAnimal() {
   // ✅ allow user to type in name of animal
   const nameOfAnimal = window.prompt("Who did it?")
   console.log('Accused animal name', nameOfAnimal);
-  // get the murderer
+  // ✅ get the murderer
   const murderer = animals.find((animal) => animal.isMurderer == true)
   console.log('MURDERER', murderer);
-  // compare the murderer's name to the user input
+  // ✅ compare the murderer's name to the user input
   if (nameOfAnimal == murderer.name) {
     window.alert(`${murderer.name} is going to jail forever. Great job detective!`)
   }
-  // murder another animal if guessed incorrectly
+  // ✅ murder another animal if guessed incorrectly
   else {
     commitMurder()
   }
+}
+
+function drawClue() {
+  // get ✅ the murderer
+  const murderer = animals.find((animal) => animal.isMurderer == true)
+
+  // NOTE shift removes the first element from an array and returns it
+  const nextClue = clues.shift()
+
+  let clueText = ''
+
+  // if (nextClue == 'food') {
+  //   // ✅ figure out what the murderer likes to eat
+  //   const randomFoodIndex = Math.floor(Math.random() * murderer.likesToEat.length)
+  //   const randomFood = murderer.likesToEat[randomFoodIndex]
+  //   clueText = `<li>The murderer has a taste for ${randomFood}</li>`
+  // }
+
+  // if (nextClue == 'weapon') {
+  //   clueText = `<li>The murderer used ${murderer.weapon} to murder their victim</li>`
+  // }
+
+  // Switch will evaluate the key passed through parentheses
+  switch (nextClue) {
+    // case checks if the key is 'food'
+    case 'food':
+      const randomFoodIndex = Math.floor(Math.random() * murderer.likesToEat.length)
+      const randomFood = murderer.likesToEat[randomFoodIndex]
+      clueText = `<li>The murderer has a taste for ${randomFood}</li>`
+      // break will end swicth statement
+      break;
+
+    case 'weapon':
+      clueText = `<li>The murderer used ${murderer.weapon} to murder their victim</li>`
+      break;
+
+    case 'isMammal':
+      if (murderer.isMammal) {
+        clueText = `<li>The murderer is a mammal</li>`
+      }
+      else {
+        clueText = `<li>The murderer is not a mammal</li>`
+      }
+      break;
+
+    case 'emoji':
+      clueText = `<li>Here is a security camera enhancement of the murderer: <span class="footage">${murderer.emoji}</span></li>`
+      break;
+
+    // if none of our cases match, run this code 
+    default:
+      clueText = `<li>You are out of clues! You should be a better detective!</li>`
+      break;
+  }
+
+  // ✅ draw that to page
+  const cluesElement = document.getElementById('clues')
+  cluesElement.innerHTML += clueText
 }
 
 // ANCHOR run these function on page load
