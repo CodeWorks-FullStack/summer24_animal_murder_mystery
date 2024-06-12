@@ -192,6 +192,23 @@ function commitMurder() {
   drawAnimals()
 }
 
+function accuseAnimal() {
+  // ✅ allow user to type in name of animal
+  const nameOfAnimal = window.prompt("Who did it?")
+  console.log('Accused animal name', nameOfAnimal);
+  // get the murderer
+  const murderer = animals.find((animal) => animal.isMurderer == true)
+  console.log('MURDERER', murderer);
+  // compare the murderer's name to the user input
+  if (nameOfAnimal == murderer.name) {
+    window.alert(`${murderer.name} is going to jail forever. Great job detective!`)
+  }
+  // murder another animal if guessed incorrectly
+  else {
+    commitMurder()
+  }
+}
+
 // ANCHOR run these function on page load
 drawAnimals()
 makeAMurderer()
