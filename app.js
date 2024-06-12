@@ -63,4 +63,69 @@ cats.forEach((cat) => console.log(cat.name))
 console.groupEnd()
 
 // SECTION application code
+
+const animals = [
+  {
+    name: 'Oslo',
+    emoji: '🦧',
+    weapon: 'Fist',
+    isMammal: true,
+    likesToEat: ['fruit', 'vegetables', 'meat'],
+    isMurderer: false,
+    isAlive: true
+  },
+  {
+    name: 'Apollo',
+    emoji: '🦒',
+    weapon: 'Feet',
+    isMammal: true,
+    likesToEat: ['vegetables'],
+    isMurderer: false,
+    isAlive: true
+  },
+  {
+    name: 'Jeff',
+    emoji: '🐍',
+    weapon: 'Teeth',
+    isMammal: false,
+    likesToEat: ['meat', 'bugs'],
+    isMurderer: false,
+    isAlive: true
+  },
+  {
+    name: 'Quetzalcóatllama',
+    emoji: '🦙',
+    weapon: 'Feet',
+    isMammal: true,
+    likesToEat: ['vegetables'],
+    isMurderer: false,
+    isAlive: true
+  },
+  {
+    name: 'Larry',
+    emoji: '🦈',
+    weapon: 'Teeth',
+    isMammal: false,
+    likesToEat: ['meat', 'fish'],
+    isMurderer: false,
+    isAlive: true
+  },
+]
+
+function drawAnimals() {
+  console.log('Does this even run?');
+  let animalEmojis = ''
+  for (let i = 0; i < animals.length; i++) {
+    const animal = animals[i];
+    animalEmojis += animal.emoji
+  }
+  console.log(animalEmojis);
+  const animalLineupElement = document.getElementById('animalLineup')
+  animalLineupElement.innerText = animalEmojis
+}
+
+
+// ANCHOR run these function on page load
+drawAnimals()
+
 // !SECTION
