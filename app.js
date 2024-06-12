@@ -188,11 +188,16 @@ function makeAMurderer() {
   console.log(`random animal at the index of ${randomIndex}`, randomAnimal);
 }
 
-// FIXME if no animals left, you lose the game 
 function commitMurder() {
   // ✅ make sure murderer is not the victim
   // ✅ make sure animal is alive
   const potentialVictims = animals.filter((animal) => animal.isAlive == true && animal.isMurderer == false)
+
+  // if there are no victims left
+  if (potentialVictims.length == 0) {
+    endGame()
+  }
+
   console.log('potential victims', potentialVictims);
   const randomIndex = Math.floor(Math.random() * potentialVictims.length)
   // ✅ pick a victim at random
@@ -277,6 +282,10 @@ function drawClue() {
   // ✅ draw that to page
   const cluesElement = document.getElementById('clues')
   cluesElement.innerHTML += clueText
+}
+
+function endGame() {
+  window.alert()
 }
 
 // ANCHOR run these function on page load
