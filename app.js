@@ -110,22 +110,49 @@ const animals = [
     isMurderer: false,
     isAlive: true
   },
+  {
+    name: 'Ben',
+    emoji: '🦛',
+    weapon: 'Teeth',
+    isMammal: true,
+    likesToEat: ['vegetables', 'fruits'],
+    isMurderer: false,
+    isAlive: true
+  },
+  {
+    name: 'Walter',
+    emoji: '🐃',
+    weapon: 'Horns',
+    isMammal: true,
+    likesToEat: ['vegetables'],
+    isMurderer: false,
+    isAlive: true
+  },
 ]
 
 function drawAnimals() {
-  console.log('Does this even run?');
   let animalEmojis = ''
   for (let i = 0; i < animals.length; i++) {
     const animal = animals[i];
     animalEmojis += animal.emoji
   }
-  console.log(animalEmojis);
   const animalLineupElement = document.getElementById('animalLineup')
   animalLineupElement.innerText = animalEmojis
+}
+
+function makeAMurderer() {
+  // ✅ select an animal at random
+  // gets a random number between -1 and the length of the array (all valid index numbers) 
+  const randomIndex = Math.floor(Math.random() * animals.length)
+  const randomAnimal = animals[randomIndex]
+  // ✅ change isMurderer to true
+  randomAnimal.isMurderer = true
+  console.log(`random animal at the index of ${randomIndex}`, randomAnimal);
 }
 
 
 // ANCHOR run these function on page load
 drawAnimals()
+makeAMurderer()
 
 // !SECTION
