@@ -140,6 +140,8 @@ function drawAnimals() {
   animalLineupElement.innerText = animalEmojis
 }
 
+
+
 function makeAMurderer() {
   // ✅ select an animal at random
   // gets a random number between -1 and the length of the array (all valid index numbers) 
@@ -150,6 +152,19 @@ function makeAMurderer() {
   console.log(`random animal at the index of ${randomIndex}`, randomAnimal);
 }
 
+// FIXME if no animals left, you lose the game 
+function commitMurder() {
+  // ✅ make sure murderer is not the victim
+  // ✅ make sure animal is alive
+  const potentialVictims = animals.filter((animal) => animal.isAlive == true && animal.isMurderer == false)
+  console.log('potential victims', potentialVictims);
+  const randomIndex = Math.floor(Math.random() * potentialVictims.length)
+  // ✅ pick a victim at random
+  const randomVictim = potentialVictims[randomIndex]
+  // ✅ change isAlive to false
+  randomVictim.isAlive = false
+  console.log('THE VICTIM', randomVictim);
+}
 
 // ANCHOR run these function on page load
 drawAnimals()
