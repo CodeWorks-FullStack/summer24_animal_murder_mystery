@@ -161,10 +161,10 @@ function drawSuspects() {
 
   let animalEmojis = ''
 
-  aliveAnimals.forEach((animal) => animalEmojis += animal.emoji)
+  aliveAnimals.forEach((animal) => animalEmojis += `<span title="${animal.name}">${animal.emoji}</span>`)
 
   const animalLineupElement = document.getElementById('animalLineup')
-  animalLineupElement.innerText = animalEmojis
+  animalLineupElement.innerHTML = animalEmojis
 }
 
 function drawVictims() {
@@ -172,10 +172,10 @@ function drawVictims() {
 
   let animalEmojis = ''
 
-  notAliveAnimals.forEach((animal) => animalEmojis += animal.emoji)
+  notAliveAnimals.forEach((animal) => animalEmojis += `<span  title="RIP ${animal.name}">${animal.emoji}</span>`)
 
   const animalGraveyardElement = document.getElementById('animalGraveyard')
-  animalGraveyardElement.innerText = animalEmojis
+  animalGraveyardElement.innerHTML = animalEmojis
 }
 
 function makeAMurderer() {
@@ -205,6 +205,8 @@ function commitMurder() {
 
   // if there are no victims left
   if (potentialVictims.length == 1) {
+    const murderer = getTheMurderer()
+    window.alert(`${murderer.name} was the murderer all along! You failed dumb dumb detective`)
     endGame()
   }
 }
@@ -219,6 +221,7 @@ function accuseAnimal() {
   // ✅ compare the murderer's name to the user input
   if (nameOfAnimal == murderer.name) {
     window.alert(`${murderer.name} is going to jail forever. Great job detective!`)
+    endGame()
   }
   // ✅ murder another animal if guessed incorrectly
   else {
@@ -284,18 +287,23 @@ function drawClue() {
   cluesElement.innerHTML += clueText
 }
 
+
 function getTheMurderer() {
   const murderer = animals.find((animal) => animal.isMurderer == true)
   return murderer
 }
 
 function endGame() {
-  const murderer = getTheMurderer()
-  window.alert(`${murderer.name} was the murderer all along! You failed dumb dumb detective`)
+
   animals.forEach((animal) => {
     animal.isAlive = true
     animal.isMurderer = false
   })
+  document.getElementById('clues').innerText = ''
+  // Empties array
+  clues.length = 0
+  // Adds all of these strings back into our clues array
+  clues.push('food', 'weapon', 'isMammal', 'emoji')
   startGame()
 }
 
